@@ -4,10 +4,28 @@ import { links } from '../data/links';
 const prisma = new PrismaClient();
 
 async function main() {
+  
   await prisma.user.create({
     data: {
-      email: 'test@gmail.com',
-      role: 'ADMIN',
+      email: 'user@gmail.com',
+      role: {
+        connectOrCreate: {
+          where: {name: 'User'},
+          create: {name: 'User'}
+        }
+      }
+    },
+  });
+  
+  await prisma.user.create({
+    data: {
+      email: 'admin@gmail.com',
+      role: {
+        connectOrCreate: {
+          where: {name: 'Admin'},
+          create: {name: 'Admin'}
+        }
+      }
     },
   });
 
